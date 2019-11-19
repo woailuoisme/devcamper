@@ -1,23 +1,17 @@
-const ErrorResponse = require('../utils/ErrorResponse');
+const ErrorResponse = require('../utils/errorResponse');
+
 const errorHandler = (err, req, res, next) => {
 	let error = { ...err };
 
 	error.message = err.message;
 
 	// Log to console for dev
-	// console.log(err.stack.red);
 	console.log(err);
 
 	// Mongoose bad ObjectId
 	if (err.name === 'CastError') {
-		const message = `Resource not found with id ${err.value}`;
+		const message = `Resource not found`;
 		error = new ErrorResponse(message, 404);
-	}
-
-	// Mongoose bad ObjectId
-	if (err.name === 'ValidationError') {
-		const message = err.errors.name.message;
-		error = new ErrorResponse(message, 400);
 	}
 
 	// Mongoose duplicate key
