@@ -6,7 +6,7 @@ const Bootcamp = require('../models/bootcamp');
  * @route /api/v1/bootcamps
  * @access public
  */
-exports.getBootcamps = asynHandler(async (req, res, next) => {
+const index = asynHandler(async (req, res, next) => {
 	const bootcamps = await Bootcamp.find({});
 	res.status(200).json({
 		success: true,
@@ -18,7 +18,7 @@ exports.getBootcamps = asynHandler(async (req, res, next) => {
  * @route /api/v1/bootcamps
  * @access public
  */
-exports.createBootcamp = asynHandler(async (req, res, next) => {
+const create = asynHandler(async (req, res, next) => {
 	// console.log(req.body);
 	const bootcamp = await Bootcamp.create(req.body);
 	res.status(201).json({
@@ -32,7 +32,7 @@ exports.createBootcamp = asynHandler(async (req, res, next) => {
  * @route /api/v1/bootcamps/:id
  * @access public
  */
-exports.getBootcamp = asynHandler(async (req, res, next) => {
+const show = asynHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findById(req.params.id);
 	if (!bootcamp) {
 		return next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
@@ -48,7 +48,7 @@ exports.getBootcamp = asynHandler(async (req, res, next) => {
  * @route /api/v1/bootcamps/:id
  * @access public
  */
-exports.updateBootcamp = asynHandler(async (req, res, next) => {
+const update = asynHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true,
@@ -65,7 +65,7 @@ exports.updateBootcamp = asynHandler(async (req, res, next) => {
  * @route /api/v1/bootcamps/:id
  * @access public
  */
-exports.deleteBootcamp = asynHandler(async (req, res, next) => {
+const destroy = asynHandler(async (req, res, next) => {
 	const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
 	if (!bootcamp) {
 		return next(new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404));
@@ -76,3 +76,11 @@ exports.deleteBootcamp = asynHandler(async (req, res, next) => {
 		msg: `delete single bootcamp ${req.params.id}`
 	});
 });
+
+module.exports = BootcampController = {
+	index,
+	show,
+	update,
+	destroy,
+	create
+};

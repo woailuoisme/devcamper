@@ -1,6 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 node_modules
 
-config/config.env
-.idea
+.env
 yarn-error.log
+
+.idea
+.DS_Store
